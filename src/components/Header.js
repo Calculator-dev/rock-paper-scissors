@@ -10,24 +10,8 @@ import { IconButton } from '@mui/material';
 
 export default function Header() {
     const score = useSelector(getTotalScore)
-    const [storageScore, setStorageScore] = React.useState("")
+    
 
-    React.useEffect(() => {
-        localStorage.setItem("score", JSON.stringify(score))
-
-    })
-
-    React.useEffect(() => {
-        const score = localStorage.getItem("score")
-
-        if (score){
-            setStorageScore(JSON.parse(score))
-        }
-    }, [score])
-
-    window.onunload = function () {
-        localStorage.removeItem('score')
-    }
     
 
   return (
@@ -47,7 +31,7 @@ export default function Header() {
             Rock Paper Scissors Game
           </Typography>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Score: {storageScore}
+            Score: {score}
           </Typography>
         </Toolbar>
       </AppBar>

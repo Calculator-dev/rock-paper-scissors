@@ -3,7 +3,7 @@ import { styled } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import {useSelector, useDispatch} from "react-redux"
 import {useNavigate} from "react-router-dom"
-import { decreaseTotalScore, getComputerImage, getComputerPick, getUserImage, getUserPick, increaseTotalScore } from '../slice/GameSlice'
+import { decreaseTotalScore, getComputerImage, getComputerPick, getTotalScore, getUserImage, getUserPick, increaseTotalScore } from '../slice/GameSlice'
 
 
 export default function Game() {
@@ -16,6 +16,7 @@ export default function Game() {
     const userImage = useSelector(getUserImage)
     const computerPick = useSelector(getComputerPick)
     const computerImage = useSelector(getComputerImage)
+    const score = useSelector(getTotalScore)
 
     const handleQuery = () => {
         if (userPick === "paper" && computerPick === "rock"){
@@ -37,6 +38,13 @@ export default function Game() {
     }
 
     useEffect(() => {
+        if(userPick && computerPick){
+            
+            localStorage.setItem("score", JSON.stringify(score))
+        }
+    }, [userPick, computerPick, score])
+
+    useEffect(() => {
         setTimeout(() => {
             setShowElement(true);
             handleQuery()
@@ -49,6 +57,7 @@ export default function Game() {
 
     function handleClick() {
         navigate("/")
+
     }
 
     return (

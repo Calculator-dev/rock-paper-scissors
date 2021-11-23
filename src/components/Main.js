@@ -4,7 +4,7 @@ import rockIcon from "../assets/icon-rock.svg"
 import scissorsIcon from "../assets/icon-scissors.svg"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { addComputerImage, addComputerPick, addUserImage, addUserPick, getComputerPick } from '../slice/GameSlice'
+import { addComputerImage, addComputerPick, addUserImage, addUserPick, getComputerPick, getTotalScore } from '../slice/GameSlice'
 import Weapon from './Weapon'
 import { styled } from '@mui/system'
 import { Typography } from '@mui/material'
@@ -14,6 +14,15 @@ export default function Main() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const computerPick = useSelector(getComputerPick)
+    const score = useSelector(getTotalScore)
+
+    React.useEffect(() => {
+        const score = localStorage.getItem("score")
+
+        if (score){
+            return JSON.parse(score)
+        }
+    }, [score])
 
 
     const computerOptions = [
@@ -23,6 +32,8 @@ export default function Main() {
     ]
 
     const handleClick = ({name, image}) => {
+        
+        localStorage.setItem("score", JSON.stringify(score))
         if (name === computerPick){
             const list = computerOptions.find((value) => (
                 value.name === computerPick
